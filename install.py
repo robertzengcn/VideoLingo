@@ -28,6 +28,7 @@ def check_nvidia_gpu():
                 handle = pynvml.nvmlDeviceGetHandleByIndex(i)
                 name = pynvml.nvmlDeviceGetName(handle)
                 print(f"GPU {i}: {name}")
+            pynvml.nvmlShutdown()    
             return True
         else:
             print(t("No NVIDIA GPU detected"))
@@ -35,8 +36,8 @@ def check_nvidia_gpu():
     except pynvml.NVMLError:
         print(t("No NVIDIA GPU detected or NVIDIA drivers not properly installed"))
         return False
-    finally:
-        pynvml.nvmlShutdown()
+    # finally:
+    #     pynvml.nvmlShutdown()
 
 def check_ffmpeg():
     from rich.console import Console
