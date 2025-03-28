@@ -9,12 +9,13 @@ from torch.cuda import is_available as is_cuda_available
 from typing import Optional
 from demucs.api import Separator
 from demucs.apply import BagOfModels
+from core.video_config import video_config
 import gc
 
-AUDIO_DIR = "output/audio"
-RAW_AUDIO_FILE = os.path.join(AUDIO_DIR, "raw.mp3")
-BACKGROUND_AUDIO_FILE = os.path.join(AUDIO_DIR, "background.mp3")
-VOCAL_AUDIO_FILE = os.path.join(AUDIO_DIR, "vocal.mp3")
+AUDIO_DIR = os.path.join(video_config.output_dir,"output/audio")
+RAW_AUDIO_FILE = os.path.join(video_config.output_dir,AUDIO_DIR, "raw.mp3")
+BACKGROUND_AUDIO_FILE = os.path.join(video_config.output_dir,AUDIO_DIR, "background.mp3")
+VOCAL_AUDIO_FILE = os.path.join(video_config.output_dir,AUDIO_DIR, "vocal.mp3")
 
 class PreloadedSeparator(Separator):
     def __init__(self, model: BagOfModels, shifts: int = 1, overlap: float = 0.25,

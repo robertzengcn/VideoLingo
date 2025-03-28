@@ -12,7 +12,7 @@ def split_by_mark(nlp):
     language = load_key("whisper.detected_language") if whisper_language == 'auto' else whisper_language # consider force english case
     joiner = get_joiner(language)
     print(f"[blue]🔍 Using {language} language joiner: '{joiner}'[/blue]")
-    chunks = pd.read_excel("output/log/cleaned_chunks.xlsx")
+    chunks = pd.read_excel(os.path.join(video_config.output_dir,"output","log","cleaned_chunks.xlsx"))
     chunks.text = chunks.text.apply(lambda x: x.strip('"').strip(""))
     
     # join with joiner
@@ -23,7 +23,7 @@ def split_by_mark(nlp):
 
     sentences_by_mark = [sent.text for sent in doc.sents]
 
-    with open("output/log/sentence_by_mark.txt", "w", encoding="utf-8") as output_file:
+    with open(os.path.join(video_config.output_dir,"output","log","sentence_by_mark.txt"), "w", encoding="utf-8") as output_file:
         for i, sentence in enumerate(sentences_by_mark):
             if i > 0 and sentence.strip() in [',', '.', '，', '。', '？', '！']:
                 # ! If the current line contains only punctuation, merge it with the previous line, this happens in Chinese, Japanese, etc.

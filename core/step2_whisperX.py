@@ -1,6 +1,6 @@
 import os,sys
+from core.video_config import video_config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from rich import print as rprint
 import subprocess
 
@@ -8,9 +8,10 @@ from core.config_utils import load_key
 from core.all_whisper_methods.demucs_vl import demucs_main, RAW_AUDIO_FILE, VOCAL_AUDIO_FILE
 from core.all_whisper_methods.audio_preprocess import process_transcription, convert_video_to_audio, split_audio, save_results, compress_audio, CLEANED_CHUNKS_EXCEL_PATH
 from core.step1_ytdlp import find_video_files
+from core.video_config import video_config
 
-WHISPER_FILE = "output/audio/for_whisper.mp3"
-ENHANCED_VOCAL_PATH = "output/audio/enhanced_vocals.mp3"
+WHISPER_FILE = os.path.join(video_config.output_dir,"output/audio/for_whisper.mp3")
+ENHANCED_VOCAL_PATH = os.path.join(video_config.output_dir,"output/audio/enhanced_vocals.mp3")
 
 def enhance_vocals(vocals_ratio=2.50):
     """Enhance vocals audio volume"""
@@ -32,13 +33,19 @@ def enhance_vocals(vocals_ratio=2.50):
         return VOCAL_AUDIO_FILE  # Fallback to original vocals if enhancement fails
     
 def transcribe():
-    if os.path.exists(CLEANED_CHUNKS_EXCEL_PATH):
+    # Create output directories if they don't exist
+    output_dir = video_config.output_dir
+    os.makedirs(os.path.join(output_dir, "audio"), exist_ok=True)
+    os.makedirs(os.path.join(output_dir, "log"), exist_ok=True)
+    if os.path.exists(os.path.join(output_dir, CLEANED_CHUNKS_EXCEL_PATH)):
         rprint("[yellow]⚠️ Transcription results already exist, skipping transcription step.[/yellow]")
         return
     
     # step0 Convert video to audio
-    video_file = find_video_files()
-    convert_video_to_audio(video_file)
+    # video_file = find_video_files()
+    # get video_file from video_config
+    video_file = video_config.video_path
+    finalRawAudioFile = convert_video_to_audio(video_file,output_dir)
 
     # step1 Demucs vocal separation:
     if load_key("demucs"):

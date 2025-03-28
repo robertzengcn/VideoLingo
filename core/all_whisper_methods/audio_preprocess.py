@@ -4,10 +4,11 @@ from typing import Dict, List, Tuple
 from rich import print
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from core.config_utils import update_key
+from core.video_config import video_config
 
-AUDIO_DIR = "output/audio"
-RAW_AUDIO_FILE = "output/audio/raw.mp3"
-CLEANED_CHUNKS_EXCEL_PATH = "output/log/cleaned_chunks.xlsx"
+AUDIO_DIR = os.path.join(video_config.output_dir, "output/audio")
+RAW_AUDIO_FILE = os.path.join(video_config.output_dir, "output/audio/raw.mp3")
+CLEANED_CHUNKS_EXCEL_PATH = os.path.join(video_config.output_dir, "output/log/cleaned_chunks.xlsx")
 
 def compress_audio(input_file: str, output_file: str):
     """将输入音频文件压缩为低质量音频文件，用于转录"""
@@ -22,8 +23,9 @@ def compress_audio(input_file: str, output_file: str):
         print(f"🗜️ Converted <{input_file}> to <{output_file}> with FFmpeg")
     return output_file
 
-def convert_video_to_audio(video_file: str):
-    os.makedirs(AUDIO_DIR, exist_ok=True)
+def convert_video_to_audio(video_file: str)->str:
+    os.makedirs( AUDIO_DIR, exist_ok=True)
+    # finalRawAudioFile = RAW_AUDIO_FILE
     if not os.path.exists(RAW_AUDIO_FILE):
         print(f"🎬➡️🎵 Converting to high quality audio with FFmpeg ......")
         subprocess.run([
@@ -31,9 +33,10 @@ def convert_video_to_audio(video_file: str):
             '-c:a', 'libmp3lame', '-b:a', '128k',
             '-ar', '32000',
             '-ac', '1', 
-            '-metadata', 'encoding=UTF-8', RAW_AUDIO_FILE
+            '-metadata', 'encoding=UTF-8', finalRawAudioFile
         ], check=True, stderr=subprocess.PIPE)
         print(f"🎬➡️🎵 Converted <{video_file}> to <{RAW_AUDIO_FILE}> with FFmpeg\n")
+    return RAW_AUDIO_FILE
 
 def _detect_silence(audio_file: str, start: float, end: float) -> List[float]:
     """Detect silence points in the given audio segment"""

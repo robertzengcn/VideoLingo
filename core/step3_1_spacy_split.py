@@ -7,9 +7,12 @@ from spacy_utils.split_by_connector import split_sentences_main
 from spacy_utils.split_by_mark import split_by_mark
 from spacy_utils.split_long_by_root import split_long_by_root_main
 from spacy_utils.load_nlp_model import init_nlp
+from core.video_config import video_config
 
 def split_by_spacy():
-    if os.path.exists('output/log/sentence_splitbynlp.txt'):
+    output_dir = video_config.output_dir
+    final_split_file = os.path.join(output_dir, "log", "sentence_splitbynlp.txt")
+    if os.path.exists(final_split_file):
         print("File 'sentence_splitbynlp.txt' already exists. Skipping split_by_spacy.")
         return
     
