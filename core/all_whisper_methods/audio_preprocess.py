@@ -140,6 +140,10 @@ def process_transcription(result: Dict) -> pd.DataFrame:
                 
                 all_words.append(word_dict)
     
+    # Convert the list of word dictionaries into a pandas DataFrame
+    # Each dictionary becomes a row with columns: 'text', 'start', 'end'
+    # all_words is a list of dictionaries containing word info like:
+    # [{'text': 'hello', 'start': 0.5, 'end': 0.7}, ...]
     return pd.DataFrame(all_words)
 
 def save_results(df: pd.DataFrame):

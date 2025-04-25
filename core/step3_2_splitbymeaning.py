@@ -9,7 +9,7 @@ from core.spacy_utils.load_nlp_model import init_nlp
 from core.config_utils import load_key, get_joiner
 from rich.console import Console
 from rich.table import Table
-
+from core.video_config import config
 console = Console()
 
 def tokenize_sentence(sentence, nlp):
@@ -111,17 +111,18 @@ def parallel_split_sentences(sentences, max_length, max_workers, nlp, retry_atte
 
 def split_sentences_by_meaning():
     """The main function to split sentences by meaning."""
+    sentences_splitbynlp=os.path.join(config.output_dir,'output/log/sentence_splitbynlp.txt')
     # read input sentences
-    with open('output/log/sentence_splitbynlp.txt', 'r', encoding='utf-8') as f:
+    with open(sentences_splitbynlp, 'r', encoding='utf-8') as f:
         sentences = [line.strip() for line in f.readlines()]
 
     nlp = init_nlp()
     # 🔄 process sentences multiple times to ensure all are split
     for retry_attempt in range(3):
         sentences = parallel_split_sentences(sentences, max_length=load_key("max_split_length"), max_workers=load_key("max_workers"), nlp=nlp, retry_attempt=retry_attempt)
-
+    sentences_splitbymeaning=os.path.join(config.output_dir,'output/log/sentence_splitbymeaning.txt')
     # 💾 save results
-    with open('output/log/sentence_splitbymeaning.txt', 'w', encoding='utf-8') as f:
+    with open(sentences_splitbymeaning, 'w', encoding='utf-8') as f:
         f.write('\n'.join(sentences))
     console.print('[green]✅ All sentences have been successfully split![/green]')
 

@@ -12,13 +12,13 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from difflib import SequenceMatcher
-
+from core.video_config import video_config
 console = Console()
 
-SENTENCE_SPLIT_FILE = "output/log/sentence_splitbymeaning.txt"
-TRANSLATION_RESULTS_FILE = "output/log/translation_results.xlsx"
-TERMINOLOGY_FILE = "output/log/terminology.json"
-CLEANED_CHUNKS_FILE = "output/log/cleaned_chunks.xlsx"
+SENTENCE_SPLIT_FILE = os.path.join(video_config.output_dir,"output/log/sentence_splitbymeaning.txt")
+TRANSLATION_RESULTS_FILE = os.path.join(video_config.output_dir,"output/log/translation_results.xlsx")
+TERMINOLOGY_FILE = os.path.join(video_config.output_dir,"output/log/terminology.json")
+CLEANED_CHUNKS_FILE = os.path.join(video_config.output_dir,"output/log/cleaned_chunks.xlsx")
 
 # Function to split text into chunks
 def split_chunks_by_chars(chunk_size=400, max_i=8): 

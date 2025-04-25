@@ -6,6 +6,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 from core.spacy_utils.load_nlp_model import init_nlp
 from core.config_utils import load_key, get_joiner
 from rich import print
+import core.video_config as video_config
 
 def split_by_mark(nlp):
     whisper_language = load_key("whisper.language")

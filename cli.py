@@ -22,13 +22,12 @@ import core.step10_gen_audio
 import core.step11_merge_full_audio
 import core.step12_merge_dub_to_vid
 
-def process_subtitles(video_path, output_dir=None):
+def process_subtitles(video_path, output_dir):
     """Process video subtitles."""
     try:
         # Set video path and output directory in config
-
-        # if output_dir:
-        #     video_config.output_dir = output_dir
+        video_config.video_path = video_path
+        video_config.output_dir = output_dir
         
         print(f"Starting subtitle processing for video: {video_path}")
         
@@ -168,6 +167,9 @@ def main():
     video_config.video_path = args.video_path
     video_config.output_dir = args.output_dir
     if args.command == 'subtitles':
+        if not args.output_dir:
+            print("Error: --output-dir is required for subtitle processing")
+            sys.exit(1)
         process_subtitles(args.video_path, args.output_dir)
     elif args.command == 'dub':
         process_dubbing(args.video_path, args.output_dir)

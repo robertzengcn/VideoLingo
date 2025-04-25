@@ -11,13 +11,14 @@ from core.config_utils import load_key, get_joiner
 from rich.panel import Panel
 from rich.console import Console
 from rich.table import Table
+from core.video_config import video_config
 
 console = Console()
 
 # Constants
-INPUT_FILE = "output/log/translation_results.xlsx"
-OUTPUT_SPLIT_FILE = "output/log/translation_results_for_subtitles.xlsx"
-OUTPUT_REMERGED_FILE = "output/log/translation_results_remerged.xlsx"
+INPUT_FILE = os.path.join(video_config.output_dir,"output/log/translation_results.xlsx")
+OUTPUT_SPLIT_FILE = os.path.join(video_config.output_dir,"output/log/translation_results_for_subtitles.xlsx")
+OUTPUT_REMERGED_FILE = os.path.join(video_config.output_dir,"output/log/translation_results_remerged.xlsx")
 
 # ! You can modify your own weights here
 # Chinese and Japanese 2.5 characters, Korean 2 characters, Thai 1.5 characters, full-width symbols 2 characters, other English-based and half-width symbols 1 character

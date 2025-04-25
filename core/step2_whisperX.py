@@ -37,15 +37,16 @@ def transcribe():
     output_dir = video_config.output_dir
     os.makedirs(os.path.join(output_dir, "audio"), exist_ok=True)
     os.makedirs(os.path.join(output_dir, "log"), exist_ok=True)
-    if os.path.exists(os.path.join(output_dir, CLEANED_CHUNKS_EXCEL_PATH)):
-        rprint("[yellow]⚠️ Transcription results already exist, skipping transcription step.[/yellow]")
+    if os.path.exists( CLEANED_CHUNKS_EXCEL_PATH):
+        print("[yellow]⚠️ Transcription results already exist, skipping transcription step.[/yellow]")
         return
     
     # step0 Convert video to audio
-    # video_file = find_video_files()
+    #video_file = find_video_files()
     # get video_file from video_config
-    video_file = video_config.video_path
-    finalRawAudioFile = convert_video_to_audio(video_file,output_dir)
+    #video_file = video_config.video_path
+    video_file=video_config.video_path
+    convert_video_to_audio(video_file,output_dir)
 
     # step1 Demucs vocal separation:
     if load_key("demucs"):

@@ -4,10 +4,10 @@ from core.ask_gpt import ask_gpt
 from core.prompts_storage import get_summary_prompt
 from core.config_utils import load_key
 import pandas as pd
-
-TERMINOLOGY_JSON_PATH = 'output/log/terminology.json'
-SENTENCE_TXT_PATH = 'output/log/sentence_splitbymeaning.txt'
-CUSTOM_TERMS_PATH = 'custom_terms.xlsx'
+from core.video_config import config
+TERMINOLOGY_JSON_PATH = config.output_dir+'/output/log/terminology.json'
+SENTENCE_TXT_PATH = config.output_dir+'/output/log/sentence_splitbymeaning.txt'
+CUSTOM_TERMS_PATH = config.output_dir+'/custom_terms.xlsx'
 
 def combine_chunks():
     """Combine the text chunks identified by whisper into a single long text"""

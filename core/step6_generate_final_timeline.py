@@ -5,15 +5,15 @@ import re
 from rich.panel import Panel
 from rich.console import Console
 import autocorrect_py as autocorrect
-
+from core.video_config import video_config
 console = Console()
 
-CLEANED_CHUNKS_FILE = 'output/log/cleaned_chunks.xlsx'
-TRANSLATION_RESULTS_FOR_SUBTITLES_FILE = 'output/log/translation_results_for_subtitles.xlsx'
-TRANSLATION_RESULTS_REMERGED_FILE = 'output/log/translation_results_remerged.xlsx'
+CLEANED_CHUNKS_FILE = os.path.join(video_config.output_dir,'output/log/cleaned_chunks.xlsx')
+TRANSLATION_RESULTS_FOR_SUBTITLES_FILE = os.path.join(video_config.output_dir,'output/log/translation_results_for_subtitles.xlsx')
+TRANSLATION_RESULTS_REMERGED_FILE = os.path.join(video_config.output_dir,'output/log/translation_results_remerged.xlsx')
 
-OUTPUT_DIR = 'output'
-AUDIO_OUTPUT_DIR = 'output/audio'
+OUTPUT_DIR = os.path.join(video_config.output_dir,'output')
+AUDIO_OUTPUT_DIR = os.path.join(video_config.output_dir,'output/audio')
 
 SUBTITLE_OUTPUT_CONFIGS = [ 
     ('src.srt', ['Source']),

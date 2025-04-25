@@ -6,6 +6,7 @@ from rich import print as rprint
 import cv2
 import numpy as np
 import platform
+import core.video_config as video_config
 
 SRC_FONT_SIZE = 15
 TRANS_FONT_SIZE = 17
@@ -31,9 +32,9 @@ TRANS_OUTLINE_WIDTH = 1
 TRANS_BACK_COLOR = '&H33000000'
 
 OUTPUT_DIR = "output"
-OUTPUT_VIDEO = f"{OUTPUT_DIR}/output_sub.mp4"
-SRC_SRT = f"{OUTPUT_DIR}/src.srt"
-TRANS_SRT = f"{OUTPUT_DIR}/trans.srt"
+OUTPUT_VIDEO = os.path.join(video_config.video_path, f"{OUTPUT_DIR}/output_sub.mp4")
+SRC_SRT = os.path.join(video_config.video_path, f"{OUTPUT_DIR}/src.srt")
+TRANS_SRT = os.path.join(video_config.video_path, f"{OUTPUT_DIR}/trans.srt")
     
 def check_gpu_available():
     try:
